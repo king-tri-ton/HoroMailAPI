@@ -3,15 +3,12 @@ import re
 
 def remove_tags(text: str) -> str:
     """
-    Убирает все HTML-теги из текста.
-
-    Args:
-        text (str): Текст с HTML.
-
-    Returns:
-        str: Чистый текст без тегов.
+    Убирает все HTML-теги из текста, обеспечивая правильные переносы строк.
     """
-    # Сначала удаляем ссылки <a>...</a> целиком
-    text = re.sub(r'<a.*?>.*?</a>', '', text, flags=re.DOTALL)
-    # Потом убираем все остальные теги
-    return re.sub(r'<[^>]+>', '', text)
+    text = re.sub(r'</p\s*>', '\n\n', text, flags=re.IGNORECASE)
+    text = re.sub(r'</div\s*>', '\n\n', text, flags=re.IGNORECASE)
+    text = re.sub(r'<a.*?>.*?</a>', '', text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<[^>]+>', '', text)
+    text = re.sub(r'\n\s*\n', '\n\n', text)
+    text = text.strip()
+    return text

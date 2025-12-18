@@ -49,10 +49,14 @@ horo = HoroAPI(user_agent)
 
 ### Значения знаков и периодов
 
-**Знаки зодиака (ключи для API → отображение):**
+В модуле `api.horo` определены готовые словари, которые можно использовать напрямую.
+
+#### Знаки зодиака
 
 ```python
-{
+from api.horo import ZODIAC_SIGNS
+
+ZODIAC_SIGNS = {
     'aries': '♈️ Овен',
     'taurus': '♉ Телец',
     'gemini': '♊ Близнецы',
@@ -66,18 +70,20 @@ horo = HoroAPI(user_agent)
     'aquarius': '♒ Водолей',
     'pisces': '♓ Рыбы'
 }
-```
+````
 
-**Периоды:**
+#### Периоды
 
 ```python
-{
-    'yesterday': 'вчера',
-    'today': 'сегодня',
-    'tomorrow': 'завтра',
-    'week': 'неделя',
-    'month': 'месяц',
-    'year': 'год'
+from api.horo import PERIOD_MAP
+
+PERIOD_MAP = {
+    'вчера': 'yesterday',
+    'сегодня': 'today',
+    'завтра': 'tomorrow',
+    'неделя': 'week',
+    'месяц': 'month',
+    'год': 'year'
 }
 ```
 
@@ -86,19 +92,16 @@ horo = HoroAPI(user_agent)
 ### Примеры использования
 
 ```python
-from api.horo import HoroAPI
+from api.horo import HoroAPI, ZODIAC_SIGNS, PERIOD_MAP
 
-# Инициализация
 user_agent = input("Введите User-Agent: ").strip()
 horo = HoroAPI(user_agent)
 
-# Гороскоп на сегодня для всех знаков
-title, text = horo.get_today_all()
-print(title)
-print(text)
+sign = 'cancer'
+period = 'today'
 
-# Гороскоп для Рака на сегодня
-title, text = horo.get_horo("cancer", "today")
+title, text = horo.get_horo(sign, period)
+print(f"Гороскоп для {ZODIAC_SIGNS[sign]} на {period}")
 print(title)
 print(text)
 ```
