@@ -1,8 +1,8 @@
 # coding: utf-8
-from api.horo import HoroAPI
+from api.horo import HoroAPI, ZODIAC_SIGNS, PERIOD_MAP
 
 # User-Agent
-user_agent = "" # ВСТАВЬТЕ СЮДА СВОЙ User-Agent
+user_agent = ""  # ВСТАВЬТЕ СЮДА СВОЙ User-Agent
 
 if not user_agent:
     user_agent = input("Введите User-Agent для парсера: ").strip()
@@ -13,38 +13,15 @@ if not user_agent:
 # Инициализация парсера
 horo = HoroAPI(user_agent)
 
-# Словарь знаков зодиака: ключи — значения, используемые в API
-zodiac_signs = {
-    'aries': '♈️ Овен',
-    'taurus': '♉ Телец',
-    'gemini': '♊ Близнецы',
-    'cancer': '♋️ Рак',
-    'leo': '♌ Лев',
-    'virgo': '♍ Дева',
-    'libra': '♎ Весы',
-    'scorpio': '♏ Скорпион',
-    'sagittarius': '♐ Стрелец',
-    'capricorn': '♑ Козерог',
-    'aquarius': '♒ Водолей',
-    'pisces': '♓ Рыбы'
-}
-
-# Словарь периодов: ключи — значения для API
-period_map = {
-    'yesterday': 'вчера',
-    'today': 'сегодня',
-    'tomorrow': 'завтра',
-    'week': 'неделя',
-    'month': 'месяц',
-    'year': 'год'
-}
+# Создаём обратный словарь для периодов (русский -> английский)
+period_map_reverse = {v: k for k, v in PERIOD_MAP.items()}
 
 # Пример: Гороскоп для конкретного знака
-sign = 'cancer' # используем значение для API
-date = 'today'  # используем значение для API
+sign = 'cancer'  # используем значение для API
+date = 'today'   # используем значение для API
 
 title, text = horo.get_horo(sign, date)
-print(f"=== Гороскоп для {zodiac_signs[sign]} на {period_map[date]} ===")
+print(f"=== Гороскоп для {ZODIAC_SIGNS[sign]} на {PERIOD_MAP[date]} ===")
 print(title)
 print(text)
 print()
